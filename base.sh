@@ -31,19 +31,47 @@ echo "-------------------------------------------------"
 
 sgdisk -Z ${DISK}
 sgdisk -a 2048 -o ${DISK}
-sgdisk -n 1::+260M --typecode=1:ef00 --change-name=1:'EFI' ${DISK}
-sgdisk -n 2::-0 --typecode=2:8300 --change-name=2:'ROOT' ${DISK}
+sgdisk -n 1::+260M --typecode=1:ef00 ${DISK}
+sgdisk -n 2::-0 --typecode=2:8300 ${DISK}
+
+echo "-------------------------------------------------"
+echo "Setting up LUKS encryption                       "
+echo "-------------------------------------------------"
+if [[ ${DISK} =~ "nvme" ]]; then
+  cryptsetup -y -v --type luks1 luksFormat "${DISK}p2"
+else
+  cryptsetup -y -v --type luks1 luksFormat "${DISK}2"
+fi
+
+echo "-------------------------------------------------"
+echo "Opening LUKS volume                              "
+echo "-------------------------------------------------"
+CRYPTROOT_NAME="cryptroot"
+CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
+if [[ ${DISK} =~ "nvme" ]]; then
+  cryptsetup open "${DISK}p2" ${CRYPTROOT_NAME}
+else
+  cryptsetup open "${DISK}2" ${CRYPTROOT_NAME}
+fi
 
 echo -e "\nCreating Filesystems...\n$HR"
 if [[ ${DISK} =~ "nvme" ]]; then
-  mkfs.fat -F32 -n "EFI" "${DISK}p1"
-  mkfs.btrfs -L "ROOT" "${DISK}p2" -f
-  mount -t btrfs "${DISK}p2" /mnt
+  mkfs.fat -F32 "${DISK}p1"
 else
-  mkfs.vfat -F32 -n "EFIBOOT" "${DISK}1"
-  mkfs.btrfs -L "ROOT" "${DISK}2" -f
-  mount -t btrfs "${DISK}2" /mnt
+  mkfs.fat -F32 "${DISK}1"
 fi
+
+mkfs.btrfs ${CRYPTROOT_PATH}
+mount ${CRYPTROOT_PATH} /mnt
+
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@snapshots
+btrfs subvolume create /mnt/@log
+btrfs subvolume create /mnt/@cache
+umount /mnt
+
+
 
 # Setup LUKS key file
 dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
