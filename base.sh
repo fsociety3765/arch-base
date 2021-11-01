@@ -66,6 +66,14 @@ case $formatdisk in
 		umount /mnt
 esac
 
+if ! grep -qs '/mnt' /proc/mounts; then
+    echo "Drive is not mounted can not continue"
+    echo "Rebooting in 3 Seconds ..." && sleep 1
+    echo "Rebooting in 2 Seconds ..." && sleep 1
+    echo "Rebooting in 1 Second ..." && sleep 1
+    reboot now
+fi
+
 echo "-------------------------------------------------"
 echo "Setting up mount points                          "
 echo "-------------------------------------------------"
