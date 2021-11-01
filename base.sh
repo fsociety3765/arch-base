@@ -251,5 +251,4 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo "-------------------------------------------------"
 echo "Setting up crypttab                              "
 echo "-------------------------------------------------"
-
-printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
+echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" > /etc/crypttab
