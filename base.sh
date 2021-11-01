@@ -1,18 +1,14 @@
 #!/bin/bash
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-echo "-------------------------------------------------"
-echo "Setting up mirrors for optimal download          "
-echo "-------------------------------------------------"
 iso=$(curl -4 ifconfig.co/country-iso)
 timedatectl set-ntp true
-sed -i 's/^#Para/Para/' /etc/pacman.conf
-pacman -S --noconfirm reflector
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 
 echo -e "-----------------------------------------------"
 echo -e "Setting up $iso mirrors for faster downloads   "
 echo -e "-----------------------------------------------"
+sed -i 's/^#Para/Para/' /etc/pacman.conf
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 echo "-------------------------------------------------"
