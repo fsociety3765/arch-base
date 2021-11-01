@@ -224,10 +224,11 @@ systemctl enable acpid
 echo "-------------------------------------------------"
 echo "Create non-root user                             "
 echo "-------------------------------------------------"
-useradd -m fsociety3765
-echo fsociety3765:password | chpasswd
-usermod -aG wheel fsociety3765
-echo "fsociety3765 ALL=(ALL) ALL" >> /etc/sudoers.d/fsociety3765
+read -p "Username: " username
+useradd -m ${username}
+passwd ${username}
+usermod -aG wheel ${username}
+echo "${username} ALL=(ALL) ALL" >> "/etc/sudoers.d/${username}"
 
 echo "-------------------------------------------------"
 echo "Configuring initramfs                            "
