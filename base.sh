@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Setup LUKS key file
+dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
+chmod 600 /crypto_keyfile.bin
+chmod 600 /boot/initramfs-linux*
+cryptsetup luksAddKey /dev/sdX# /crypto_keyfile.bin
+
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc
 sed -i '160s/.//' /etc/locale.gen
@@ -20,8 +26,8 @@ pacman -S grub grub-btrfs efibootmgr networkmanager network-manager-applet dialo
 # pacman -S --noconfirm xf86-video-amdgpu
 # pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
 
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
+#grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+#grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable NetworkManager
 systemctl enable bluetooth
