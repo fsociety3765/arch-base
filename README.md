@@ -9,7 +9,7 @@ This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS
 ```pacman -Syy```
 3. Partition the disk with an EFI boot partition of at least 260M and root partition
 4. Setup LUKS on the root partition  
-```cryptsetup luksFormat /dev/[root partition]```
+```cryptsetup -y -v --type luks1 luksFormat /dev/[root partition]```
 5. Open the LUKS crypt volume. The opened LUKS crypt volume will be placed at `/dev/mapper/[volume name]`, the name in this case is `cryptroot` but can be anything.  
 ```cryptsetup open /dev/[root partition] cryptroot```
 6. Format the partitions  
