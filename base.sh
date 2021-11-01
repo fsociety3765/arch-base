@@ -1,5 +1,17 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+echo "-------------------------------------------------"
+echo "Setting up mirrors for optimal download          "
+echo "-------------------------------------------------"
+iso=$(curl -4 ifconfig.co/country-iso)
+timedatectl set-ntp true
+sed -i 's/^#Para/Para/' /etc/pacman.conf
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+echo -e "-----------------------------------------------"
+echo -e "-Setting up $iso mirrors for faster downloads"
+echo -e "-----------------------------------------------"
+
 # Setup LUKS key file
 dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
 chmod 600 /crypto_keyfile.bin
