@@ -135,6 +135,9 @@ passwd root
 echo "-------------------------------------------------"
 echo "Installing system packages                       "
 echo "-------------------------------------------------"
+sed -i 's/^#Para/Para/' /etc/pacman.conf
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+pacman -Sy --noconfirm
 PKGS=(
   'grub'
   'grub-btrfs'
