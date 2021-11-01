@@ -1,9 +1,8 @@
 #!/bin/bash
 
 echo "-------------------------------------------------"
-echo "Entering the installation                        "
+echo "Starting setup                                   "
 echo "-------------------------------------------------"
-arch-chroot /mnt
 
 echo "-------------------------------------------------"
 echo "Setting up locales                               "
