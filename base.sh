@@ -9,10 +9,10 @@ timedatectl set-ntp true
 sed -i 's/^#Para/Para/' /etc/pacman.conf
 pacman -S --noconfirm reflector
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-echo -e "-----------------------------------------------"
-echo -e "-Setting up $iso mirrors for faster downloads"
-echo -e "-----------------------------------------------"
 
+echo -e "-----------------------------------------------"
+echo -e "Setting up $iso mirrors for faster downloads   "
+echo -e "-----------------------------------------------"
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 echo "-------------------------------------------------"
@@ -28,7 +28,6 @@ y|Y|yes|Yes|YES)
 echo "-------------------------------------------------"
 echo -e "\nFormatting disk...\n$HR"
 echo "-------------------------------------------------"
-
 sgdisk -Z ${DISK}
 sgdisk -a 2048 -o ${DISK}
 sgdisk -n 1::+260M --typecode=1:ef00 ${DISK}
@@ -54,11 +53,12 @@ CRYPTROOT_NAME="cryptroot"
 CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
 cryptsetup open ${ROOT_PARTITION} ${CRYPTROOT_NAME}
 
-echo -e "\nCreating Filesystems...\n$HR"
+echo "-------------------------------------------------"
+echo "Creating filesystem                              "
+echo "-------------------------------------------------"
 mkfs.fat -F32 ${EFI_PARTITION}
 mkfs.btrfs ${CRYPTROOT_PATH}
 mount ${CRYPTROOT_PATH} /mnt
-
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@snapshots
@@ -66,6 +66,9 @@ btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@cache
 umount /mnt
 
+echo "-------------------------------------------------"
+echo "Setting up mount points                          "
+echo "-------------------------------------------------"
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@ ${CRYPTROOT_PATH} /mnt
 mkdir -p /mnt/boot/efi
 mkdir -p /mnt/home
@@ -76,26 +79,56 @@ mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@log ${CRYPTROOT
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@cache ${CRYPTROOT_PATH} /mnt/var/cache
 mount ${EFI_PARTITION} /mnt/boot/efi
 
+echo "-------------------------------------------------"
+echo "Installing base packages                         "
+echo "-------------------------------------------------"
 pacstrap /mnt base linux linux-firmware btrfs-progs git vim --noconfirm --needed
+
+echo "-------------------------------------------------"
+echo "Generating fstab file                            "
+echo "-------------------------------------------------"
 genfstab -U /mnt >> /mnt/etc/fstab
 
-# Setup LUKS key file
+echo "-------------------------------------------------"
+echo "Entering the installation                        "
+echo "-------------------------------------------------"
+arch-chroot /mnt
+
+echo "-------------------------------------------------"
+echo "Setting up LUKS keyfile                          "
+echo "-------------------------------------------------"
 dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
 chmod 600 /crypto_keyfile.bin
 chmod 600 /boot/initramfs-linux*
-cryptsetup luksAddKey /dev/sdX# /crypto_keyfile.bin
 
+echo "-------------------------------------------------"
+echo "Adding the LUKS keyfile                          "
+echo "Enter your disk encryption password when prompted"
+echo "-------------------------------------------------"
+cryptsetup luksAddKey ${ROOT_PARTITION} /crypto_keyfile.bin
+
+echo "-------------------------------------------------"
+echo "Setting up locales                               "
+echo "-------------------------------------------------"
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc
 sed -i '160s/.//' /etc/locale.gen
 locale-gen
 echo "LANG=en_GB.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=uk" >> /etc/vconsole.conf
+
+echo "-------------------------------------------------"
+echo "Configuring hostname and hosts file              "
+echo "-------------------------------------------------"
 echo "arch" >> /etc/hostname
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 arch" >> /etc/hosts
-echo root:password | chpasswd
+
+echo "-------------------------------------------------"
+echo "Set root password                                "
+echo "-------------------------------------------------"
+passwd root
 
 # You can add xorg to the installation packages, I usually add it at the DE or WM install script
 # You can remove the tlp package if you are installing on a desktop or vm
