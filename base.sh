@@ -226,12 +226,17 @@ systemctl enable fstrim.timer
 systemctl enable firewalld
 systemctl enable acpid
 
+echo "-------------------------------------------------"
+echo "Create non-root user                             "
+echo "-------------------------------------------------"
 useradd -m fsociety3765
 echo fsociety3765:password | chpasswd
 usermod -aG wheel fsociety3765
-
 echo "fsociety3765 ALL=(ALL) ALL" >> /etc/sudoers.d/fsociety3765
 
+echo "-------------------------------------------------"
+echo "Configuring initramfs                            "
+echo "-------------------------------------------------"
 sed -i 's/^MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 sed -i 's/^FILES=()/FILES=(\/crypto_keyfile.bin)/' /etc/mkinitcpio.conf
 sed -i 's/filesystem/encrypt filesystem/' /etc/mkinitcpio.conf
