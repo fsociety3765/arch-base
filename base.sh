@@ -252,3 +252,10 @@ echo "-------------------------------------------------"
 echo "Setting up crypttab                              "
 echo "-------------------------------------------------"
 echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" > /etc/crypttab
+
+echo "-------------------------------------------------"
+echo "Complete                                         "
+echo "You can now reboot your system                   "
+echo "-------------------------------------------------"
+exit
+umount -a
