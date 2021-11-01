@@ -132,8 +132,64 @@ passwd root
 
 # You can add xorg to the installation packages, I usually add it at the DE or WM install script
 # You can remove the tlp package if you are installing on a desktop or vm
+echo "-------------------------------------------------"
+echo "Installing system packages                       "
+echo "-------------------------------------------------"
+PKGS=(
+  'grub'
+  'grub-btrfs'
+  'efibootmgr' 
+  'networkmanager' 
+  'network-manager-applet' 
+  'dialog' 
+  'wpa_supplicant' 
+  'mtools'
+  'dosfstools'
+  'base-devel'
+  'linux-headers'
+  'avahi'
+  'xdg-user-dirs'
+  'xdg-utils' 
+  'gvfs'
+  'gvfs-smb'
+  'nfs-utils'
+  'inetutils'
+  'dnsutils'
+  'bluez'
+  'bluez-utils'
+  'cups'
+  'hplip'
+  'alsa-utils'
+  'pipewire'
+  'pipewire-alsa'
+  'pipewire-pulse'
+  'pipewire-jack'
+  'bash-completion'
+  'openssh'
+  'rsync'
+  'reflector'
+  'acpi'
+  'acpi_call'
+  'bridge-utils'
+  'dnsmasq'
+  'vde2'
+  'openbsd-netcat'
+  'iptables-nft'
+  'ipset'
+  'firewalld'
+  'flatpak'
+  'sof-firmware'
+  'nss-mdns'
+  'acpid'
+  'os-prober'
+  'ntfs-3g'
+  'terminus-font'
+)
 
-pacman -S grub grub-btrfs efibootmgr networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools base-devel linux-headers avahi xdg-user-dirs xdg-utils gvfs gvfs-smb nfs-utils inetutils dnsutils bluez bluez-utils cups hplip alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack bash-completion openssh rsync reflector acpi acpi_call bridge-utils dnsmasq vde2 openbsd-netcat iptables-nft ipset firewalld flatpak sof-firmware nss-mdns acpid os-prober ntfs-3g terminus-font
+for PKG in "${PKGS[@]}"; do
+  echo "Installing: ${PKG}"
+  pacman -S "$PKG" --noconfirm --needed
+done
 
 # pacman -S --noconfirm xf86-video-amdgpu
 # pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
@@ -146,10 +202,8 @@ systemctl enable bluetooth
 systemctl enable cups.service
 systemctl enable sshd
 systemctl enable avahi-daemon
-#systemctl enable tlp # You can comment this command out if you didn't install tlp, see above
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
-#systemctl enable libvirtd
 systemctl enable firewalld
 systemctl enable acpid
 
