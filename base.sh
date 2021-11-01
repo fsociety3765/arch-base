@@ -130,8 +130,6 @@ echo "Set root password                                "
 echo "-------------------------------------------------"
 passwd root
 
-# You can add xorg to the installation packages, I usually add it at the DE or WM install script
-# You can remove the tlp package if you are installing on a desktop or vm
 echo "-------------------------------------------------"
 echo "Installing system packages                       "
 echo "-------------------------------------------------"
@@ -210,9 +208,6 @@ esac
 # pacman -S --noconfirm xf86-video-amdgpu
 # pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
 
-#grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-#grub-mkconfig -o /boot/grub/grub.cfg
-
 echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
 echo "-------------------------------------------------"
@@ -241,5 +236,16 @@ sed -i 's/^MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 sed -i 's/^FILES=()/FILES=(\/crypto_keyfile.bin)/' /etc/mkinitcpio.conf
 sed -i 's/filesystem/encrypt filesystem/' /etc/mkinitcpio.conf
 mkinitcpio -p linux
+
+echo "-------------------------------------------------"
+echo "Configuring Grub                                 "
+echo "-------------------------------------------------"
+#edit grub config file
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+
+echo "-------------------------------------------------"
+echo "Setting up crypttab                              "
+echo "-------------------------------------------------"
 
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
