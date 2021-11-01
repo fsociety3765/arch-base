@@ -34,33 +34,28 @@ sgdisk -a 2048 -o ${DISK}
 sgdisk -n 1::+260M --typecode=1:ef00 ${DISK}
 sgdisk -n 2::-0 --typecode=2:8300 ${DISK}
 
+if [[ ${DISK} =~ "nvme" ]]; then
+  EFI_PARTITION="${DISK}p1"
+  ROOT_PARTITION="${DISK}p2"
+else
+  EFI_PARTITION="${DISK}1"
+  ROOT_PARTITION="${DISK}2"
+fi
+
 echo "-------------------------------------------------"
 echo "Setting up LUKS encryption                       "
 echo "-------------------------------------------------"
-if [[ ${DISK} =~ "nvme" ]]; then
-  cryptsetup -y -v --type luks1 luksFormat "${DISK}p2"
-else
-  cryptsetup -y -v --type luks1 luksFormat "${DISK}2"
-fi
+cryptsetup -y -v --type luks1 luksFormat ${ROOT_PARTITION}
 
 echo "-------------------------------------------------"
 echo "Opening LUKS volume                              "
 echo "-------------------------------------------------"
 CRYPTROOT_NAME="cryptroot"
 CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
-if [[ ${DISK} =~ "nvme" ]]; then
-  cryptsetup open "${DISK}p2" ${CRYPTROOT_NAME}
-else
-  cryptsetup open "${DISK}2" ${CRYPTROOT_NAME}
-fi
+cryptsetup open ${ROOT_PARTITION} ${CRYPTROOT_NAME}
 
 echo -e "\nCreating Filesystems...\n$HR"
-if [[ ${DISK} =~ "nvme" ]]; then
-  mkfs.fat -F32 "${DISK}p1"
-else
-  mkfs.fat -F32 "${DISK}1"
-fi
-
+mkfs.fat -F32 ${EFI_PARTITION}
 mkfs.btrfs ${CRYPTROOT_PATH}
 mount ${CRYPTROOT_PATH} /mnt
 
@@ -79,11 +74,7 @@ mkdir -p /mnt/var/cache
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@home ${CRYPTROOT_PATH} /mnt/home
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@log ${CRYPTROOT_PATH} /mnt/var/log
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@cache ${CRYPTROOT_PATH} /mnt/var/cache
-if [[ ${DISK} =~ "nvme" ]]; then
-  mount "${DISK}p1" /mnt/boot/efi
-else
-  mount "${DISK}1" /mnt/boot/efi
-fi
+mount ${EFI_PARTITION} /mnt/boot/efi
 
 pacstrap /mnt base linux linux-firmware btrfs-progs git vim --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
