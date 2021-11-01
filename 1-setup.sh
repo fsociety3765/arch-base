@@ -102,8 +102,6 @@ case "$proc_type" in
 		proc_ucode=amd-ucode.img
 		;;
 esac	
-# pacman -S --noconfirm xf86-video-amdgpu
-# pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
 
 echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
@@ -138,7 +136,6 @@ mkinitcpio -p linux
 echo "-------------------------------------------------"
 echo "Configuring Grub                                 "
 echo "-------------------------------------------------"
-#edit grub config file
 ROOT_PARTITION_UUID=(blkid -o value -s UUID ${ROOT_PARTITION})
 sed -i "s/quiet/cryptdevice=UUID=${ROOT_PARTITION_UUID}:${CRYPTROOT_NAME} root=${CRYPTROOT_PATH}/" /etc/default/grub
 sed -i 's/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/' /etc/default/grub
