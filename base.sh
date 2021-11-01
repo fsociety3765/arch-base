@@ -232,4 +232,9 @@ usermod -aG wheel fsociety3765
 
 echo "fsociety3765 ALL=(ALL) ALL" >> /etc/sudoers.d/fsociety3765
 
+sed -i 's/^MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
+sed -i 's/^FILES=()/FILES=(\/crypto_keyfile.bin)/' /etc/mkinitcpio.conf
+sed -i 's/filesystem/encrypt filesystem/' /etc/mkinitcpio.conf
+mkinitcpio -p linux
+
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
