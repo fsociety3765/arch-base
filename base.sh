@@ -76,7 +76,10 @@ mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@cache ${CRYPTRO
 mount ${EFI_PARTITION} /mnt/boot/efi
 
 if ! grep -qs '/mnt' /proc/mounts; then
-    echo "Drive is not mounted, can not continue"
+    echo "-------------------------------------------------"
+    echo "!!! ERROR setting up mount points !!!            "
+    echo "!!! Cannot continue with installation !!!        "
+    echo "-------------------------------------------------"
     echo "Rebooting in 3 Seconds ..." && sleep 1
     echo "Rebooting in 2 Seconds ..." && sleep 1
     echo "Rebooting in 1 Second ..." && sleep 1
@@ -94,22 +97,22 @@ echo "-------------------------------------------------"
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "-------------------------------------------------"
-echo "Entering the installation                        "
-echo "-------------------------------------------------"
-arch-chroot /mnt
-
-echo "-------------------------------------------------"
 echo "Setting up LUKS keyfile                          "
 echo "-------------------------------------------------"
-dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
-chmod 600 /crypto_keyfile.bin
-chmod 600 /boot/initramfs-linux*
+dd bs=512 count=4 if=/dev/random of=/mnt/crypto_keyfile.bin iflag=fullblock
+chmod 600 /mnt/crypto_keyfile.bin
+chmod 600 /mnt/boot/initramfs-linux*
 
 echo "-------------------------------------------------"
 echo "Adding the LUKS keyfile                          "
 echo "Enter your disk encryption password when prompted"
 echo "-------------------------------------------------"
-cryptsetup luksAddKey ${ROOT_PARTITION} /crypto_keyfile.bin
+cryptsetup luksAddKey ${ROOT_PARTITION} /mnt/crypto_keyfile.bin
+
+echo "-------------------------------------------------"
+echo "Entering the installation                        "
+echo "-------------------------------------------------"
+arch-chroot /mnt
 
 echo "-------------------------------------------------"
 echo "Setting up locales                               "
