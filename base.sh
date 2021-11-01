@@ -235,7 +235,7 @@ echo "Configuring initramfs                            "
 echo "-------------------------------------------------"
 sed -i 's/^MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 sed -i 's/^FILES=()/FILES=(\/crypto_keyfile.bin)/' /etc/mkinitcpio.conf
-sed -i 's/filesystem/encrypt filesystem/' /etc/mkinitcpio.conf
+sed -i 's/block filesystems keyboard/block encrypt filesystems keyboard/' /etc/mkinitcpio.conf
 mkinitcpio -p linux
 
 echo "-------------------------------------------------"
