@@ -71,7 +71,22 @@ btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@cache
 umount /mnt
 
+mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@ ${CRYPTROOT_PATH} /mnt
+mkdir -p /mnt/boot/efi
+mkdir -p /mnt/home
+mkdir -p /mnt/var/log
+mkdir -p /mnt/var/cache
+mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@home ${CRYPTROOT_PATH} /mnt/home
+mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@log ${CRYPTROOT_PATH} /mnt/var/log
+mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@cache ${CRYPTROOT_PATH} /mnt/var/cache
+if [[ ${DISK} =~ "nvme" ]]; then
+  mount "${DISK}p1" /mnt/boot/efi
+else
+  mount "${DISK}1" /mnt/boot/efi
+fi
 
+pacstrap /mnt base linux linux-firmware btrfs-progs git vim --noconfirm --needed
+genfstab -U /mnt >> /mnt/etc/fstab
 
 # Setup LUKS key file
 dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
