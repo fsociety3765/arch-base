@@ -194,12 +194,28 @@ for PKG in "${PKGS[@]}"; do
   pacman -S "$PKG" --noconfirm --needed
 done
 
+proc_type=$(lscpu | awk '/Vendor ID:/ {print $3}')
+case "$proc_type" in
+	GenuineIntel)
+		print "Installing Intel microcode"
+		pacman -S --noconfirm intel-ucode
+		proc_ucode=intel-ucode.img
+		;;
+	AuthenticAMD)
+		print "Installing AMD microcode"
+		pacman -S --noconfirm amd-ucode
+		proc_ucode=amd-ucode.img
+		;;
+esac	
 # pacman -S --noconfirm xf86-video-amdgpu
 # pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
 
 #grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 #grub-mkconfig -o /boot/grub/grub.cfg
 
+echo "-------------------------------------------------"
+echo "Enabling services to start at boot               "
+echo "-------------------------------------------------"
 systemctl enable NetworkManager
 systemctl enable bluetooth
 systemctl enable cups.service
