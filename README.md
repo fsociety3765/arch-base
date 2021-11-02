@@ -15,5 +15,4 @@ This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS
 ```cd arch-base/ && chmod +x *.sh```
 7. Run the `base.sh` script.  
 ```bash base.sh```  
-8. Follow prompts until the setup is complete. Then reboot.  
-```reboot```
+8. Follow prompts until the setup is complete.
