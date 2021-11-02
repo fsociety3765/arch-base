@@ -11,7 +11,11 @@ mkinitcpio -p linux
 echo "-------------------------------------------------"
 echo "Configuring Grub                                 "
 echo "-------------------------------------------------"
+echo $ROOT_PARTITION
 ROOT_PARTITION_UUID=$(blkid -o value -s UUID ${ROOT_PARTITION})
+echo $ROOT_PARTITION_UUID
+echo $CRYPTROOT_NAME
+echo $CRYPTROOT_PATH
 sed -i "s|quiet|cryptdevice=UUID=${ROOT_PARTITION_UUID}:${CRYPTROOT_NAME} root=${CRYPTROOT_PATH}|g" /etc/default/grub
 sed -i 's/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/' /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
