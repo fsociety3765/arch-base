@@ -38,6 +38,8 @@ case $formatdisk in
 		  EFI_PARTITION="${DISK}1"
 		  export ROOT_PARTITION="${DISK}2"
 		fi
+		
+		echo "ROOT_PARTITION=${ROOT_PARTITION}" > ${HOME}/arch-base/install.conf
 
 		echo "-------------------------------------------------"
 		echo "Setting up LUKS encryption                       "
@@ -50,6 +52,9 @@ case $formatdisk in
 		export CRYPTROOT_NAME="cryptroot"
 		export CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
 		cryptsetup open ${ROOT_PARTITION} ${CRYPTROOT_NAME}
+		
+		echo "CRYPTROOT_NAME=${CRYPTROOT_NAME}" > ${HOME}/arch-base/install.conf
+		echo "CRYPTROOT_PATH=${CRYPTROOT_PATH}" > ${HOME}/arch-base/install.conf
 
 		echo "-------------------------------------------------"
 		echo "Creating filesystem                              "
