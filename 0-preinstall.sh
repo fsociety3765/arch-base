@@ -113,7 +113,7 @@ echo "-------------------------------------------------"
 cryptsetup luksAddKey ${ROOT_PARTITION} /mnt/crypto_keyfile.bin
 
 echo "-------------------------------------------------"
-echo "Coping Arch-Base scripts                         "
+echo "Copying Arch-Base scripts to installation        "
 echo "-------------------------------------------------"
 cp -R ${SCRIPT_DIR} /mnt/
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
