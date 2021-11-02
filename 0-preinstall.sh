@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "-------------------------------------------------"
+echo "Starting Pre-install                             "
+echo "-------------------------------------------------"
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 iso=$(curl -4 ifconfig.co/country-iso)
 timedatectl set-ntp true
@@ -108,3 +111,13 @@ echo "Adding the LUKS keyfile                          "
 echo "Enter your disk encryption password when prompted"
 echo "-------------------------------------------------"
 cryptsetup luksAddKey ${ROOT_PARTITION} /mnt/crypto_keyfile.bin
+
+echo "-------------------------------------------------"
+echo "Coping Arch-Base scripts                         "
+echo "-------------------------------------------------"
+cp -R ${SCRIPT_DIR} /mnt/root/
+cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
+
+echo "-------------------------------------------------"
+echo "Pre-install Complete                             "
+echo "-------------------------------------------------"
