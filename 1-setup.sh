@@ -85,6 +85,9 @@ PKGS=(
   'htop'
   'wget'
   'tmux'
+  'lsd'
+  'zsh'
+  'doas'
 )
 
 for PKG in "${PKGS[@]}"; do
