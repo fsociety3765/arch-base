@@ -111,7 +111,7 @@ useradd -m ${USERNAME}
 passwd ${USERNAME}
 usermod -aG wheel ${USERNAME}
 echo "${USERNAME} ALL=(ALL) ALL" >> "/etc/sudoers.d/${USERNAME}"
-cp -R /arch-base /home/${USERNAME}/
 export ${USERNAME}
-echo "USERNAME=${USERNAME}" > ${HOME}/arch-base/install.conf
+echo "USERNAME=${USERNAME}" >> /arch-base/install.conf
+cp -R /arch-base /home/${USERNAME}/
 
