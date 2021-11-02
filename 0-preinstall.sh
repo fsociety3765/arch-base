@@ -33,10 +33,10 @@ case $formatdisk in
 
 		if [[ ${DISK} =~ "nvme" ]]; then
 		  EFI_PARTITION="${DISK}p1"
-		  ROOT_PARTITION="${DISK}p2"
+		  export ROOT_PARTITION="${DISK}p2"
 		else
 		  EFI_PARTITION="${DISK}1"
-		  ROOT_PARTITION="${DISK}2"
+		  export ROOT_PARTITION="${DISK}2"
 		fi
 
 		echo "-------------------------------------------------"
@@ -47,8 +47,8 @@ case $formatdisk in
 		echo "-------------------------------------------------"
 		echo "Opening LUKS volume                              "
 		echo "-------------------------------------------------"
-		CRYPTROOT_NAME="cryptroot"
-		CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
+		export CRYPTROOT_NAME="cryptroot"
+		export CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
 		cryptsetup open ${ROOT_PARTITION} ${CRYPTROOT_NAME}
 
 		echo "-------------------------------------------------"
