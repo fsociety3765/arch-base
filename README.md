@@ -13,5 +13,7 @@ This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS
 ```git clone https://github.com/fsociety3765/arch-base```
 6. Move into the git repo and make all scripts executable  
 ```cd arch-base/ && chmod +x *.sh```
-7. Run the `base.sh` script. Follow prompts until the setup is complete.  
-```bash base.sh```
+7. Run the `base.sh` script.  
+```bash base.sh```  
+8. Follow prompts until the setup is complete. Then reboot.  
+```reboot```
