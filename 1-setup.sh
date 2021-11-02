@@ -148,6 +148,13 @@ echo "-------------------------------------------------"
 echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" > /etc/crypttab
 
 echo "-------------------------------------------------"
+echo "Install Paru AUR Helper                          "
+echo "-------------------------------------------------"
+cd /tmp
+git clone https://aur.archlinux.org/paru.git
+cd paru/;makepkg -si --noconfirm;cd
+
+echo "-------------------------------------------------"
 echo "Setup Complete                                   "
 echo "You can now reboot your system                   "
 echo "-------------------------------------------------"
