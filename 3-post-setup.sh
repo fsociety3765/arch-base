@@ -34,3 +34,8 @@ systemctl enable reflector.timer
 systemctl enable fstrim.timer
 systemctl enable firewalld
 systemctl enable acpid
+
+echo "-------------------------------------------------"
+echo "Setup Complete                                   "
+echo "-------------------------------------------------"
+
