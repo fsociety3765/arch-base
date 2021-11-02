@@ -24,7 +24,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo "-------------------------------------------------"
 echo "Setting up crypttab                              "
 echo "-------------------------------------------------"
-echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" > /etc/crypttab
+echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" >> /etc/crypttab
 
 echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
