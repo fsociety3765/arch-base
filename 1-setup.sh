@@ -82,6 +82,9 @@ PKGS=(
   'os-prober'
   'ntfs-3g'
   'terminus-font'
+  'htop'
+  'wget'
+  'tmux'
 )
 
 for PKG in "${PKGS[@]}"; do
@@ -111,7 +114,6 @@ useradd -m ${USERNAME}
 passwd ${USERNAME}
 usermod -aG wheel ${USERNAME}
 echo "${USERNAME} ALL=(ALL) ALL" >> "/etc/sudoers.d/${USERNAME}"
-export ${USERNAME}
 echo "USERNAME=${USERNAME}" >> /arch-base/install.conf
 cp -R /arch-base /home/${USERNAME}/
 
