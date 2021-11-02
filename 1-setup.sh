@@ -113,3 +113,4 @@ usermod -aG wheel ${username}
 echo "${username} ALL=(ALL) ALL" >> "/etc/sudoers.d/${username}"
 cp -R /arch-base /home/$username/
 export username
+
