@@ -124,6 +124,8 @@ useradd -m ${username}
 passwd ${username}
 usermod -aG wheel ${username}
 echo "${username} ALL=(ALL) ALL" >> "/etc/sudoers.d/${username}"
+cp -R /arch-base /home/$username/
+export username
 
 echo "-------------------------------------------------"
 echo "Configuring initramfs                            "
@@ -148,15 +150,5 @@ echo "-------------------------------------------------"
 echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" > /etc/crypttab
 
 echo "-------------------------------------------------"
-echo "Install Paru AUR Helper                          "
-echo "-------------------------------------------------"
-git clone https://aur.archlinux.org/paru.git /tmp/paru
-cd /tmp/paru/;makepkg -si --noconfirm;cd
-rm -rf /tmp/paru/
-
-echo "-------------------------------------------------"
 echo "Setup Complete                                   "
-echo "You can now reboot your system                   "
 echo "-------------------------------------------------"
-exit
-umount -a
