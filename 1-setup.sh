@@ -88,6 +88,14 @@ PKGS=(
   'lsd'
   'zsh'
   'doas'
+  'zsh-syntax-highlighting'
+  'zsh-autosuggestions'
+  'unzip'
+  'unrar'
+  'neovim'
+  'nano'
+  'bat'
+  'btop'
 )
 
 for PKG in "${PKGS[@]}"; do
@@ -95,8 +103,8 @@ for PKG in "${PKGS[@]}"; do
   pacman -S "$PKG" --noconfirm --needed
 done
 
-proc_type=$(lscpu | awk '/Vendor ID:/ {print $3}')
-case "$proc_type" in
+CPU_TYPE=$(lscpu | awk '/Vendor ID:/ {print $3}')
+case "${CPU_TYPE}" in
 	GenuineIntel)
 		print "Installing Intel microcode"
 		pacman -S --noconfirm intel-ucode
