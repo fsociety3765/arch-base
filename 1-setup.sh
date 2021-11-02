@@ -106,11 +106,12 @@ esac
 echo "-------------------------------------------------"
 echo "Create non-root user                             "
 echo "-------------------------------------------------"
-read -p "Username: " username
-useradd -m ${username}
-passwd ${username}
-usermod -aG wheel ${username}
-echo "${username} ALL=(ALL) ALL" >> "/etc/sudoers.d/${username}"
-cp -R /arch-base /home/$username/
-export ${username}
+read -p "Username: " USERNAME
+useradd -m ${USERNAME}
+passwd ${USERNAME}
+usermod -aG wheel ${USERNAME}
+echo "${USERNAME} ALL=(ALL) ALL" >> "/etc/sudoers.d/${USERNAME}"
+cp -R /arch-base /home/${USERNAME}/
+export ${USERNAME}
+echo "USERNAME=${USERNAME}" > ${HOME}/arch-base/install.conf
 
