@@ -1,19 +1,6 @@
 #!/bin/bash
 
 echo "-------------------------------------------------"
-echo "Enabling services to start at boot               "
-echo "-------------------------------------------------"
-systemctl enable NetworkManager
-systemctl enable bluetooth
-systemctl enable cups.service
-systemctl enable sshd
-systemctl enable avahi-daemon
-systemctl enable reflector.timer
-systemctl enable fstrim.timer
-systemctl enable firewalld
-systemctl enable acpid
-
-echo "-------------------------------------------------"
 echo "Configuring initramfs                            "
 echo "-------------------------------------------------"
 sed -i 's/^MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
@@ -34,3 +21,16 @@ echo "-------------------------------------------------"
 echo "Setting up crypttab                              "
 echo "-------------------------------------------------"
 echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" > /etc/crypttab
+
+echo "-------------------------------------------------"
+echo "Enabling services to start at boot               "
+echo "-------------------------------------------------"
+systemctl enable NetworkManager
+systemctl enable bluetooth
+systemctl enable cups.service
+systemctl enable sshd
+systemctl enable avahi-daemon
+systemctl enable reflector.timer
+systemctl enable fstrim.timer
+systemctl enable firewalld
+systemctl enable acpid
