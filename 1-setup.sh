@@ -150,9 +150,9 @@ echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" > 
 echo "-------------------------------------------------"
 echo "Install Paru AUR Helper                          "
 echo "-------------------------------------------------"
-cd /tmp
-git clone https://aur.archlinux.org/paru.git
-cd paru/;makepkg -si --noconfirm;cd
+git clone https://aur.archlinux.org/paru.git /tmp/paru
+cd /tmp/paru/;makepkg -si --noconfirm;cd
+rm -rf /tmp/paru/
 
 echo "-------------------------------------------------"
 echo "Setup Complete                                   "
