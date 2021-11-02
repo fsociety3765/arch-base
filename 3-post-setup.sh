@@ -13,6 +13,7 @@ echo "Configuring Grub                                 "
 echo "-------------------------------------------------"
 echo $ROOT_PARTITION
 ROOT_PARTITION_UUID=$(blkid -o value -s UUID ${ROOT_PARTITION})
+echo "ROOT_PARTITION_UUID=${ROOT_PARTITION_UUID}" >> /arch-base/install.conf
 echo $ROOT_PARTITION_UUID
 echo $CRYPTROOT_NAME
 echo $CRYPTROOT_PATH
