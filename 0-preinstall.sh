@@ -3,8 +3,8 @@
 echo "-------------------------------------------------"
 echo "Starting Pre-install                             "
 echo "-------------------------------------------------"
-export SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-export ISO=$(curl -4 ifconfig.co/country-iso)
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+ISO=$(curl -4 ifconfig.co/country-iso)
 echo "SCRIPT_DIR=${SCRIPT_DIR}" >> ${HOME}/arch-base/install.conf
 echo "ISO=${ISO}" >> ${HOME}/arch-base/install.conf
 timedatectl set-ntp true
@@ -35,10 +35,10 @@ case ${FORMAT} in
 
 		if [[ ${DISK} =~ "nvme" ]]; then
 		  EFI_PARTITION="${DISK}p1"
-		  export ROOT_PARTITION="${DISK}p2"
+		  ROOT_PARTITION="${DISK}p2"
 		else
 		  EFI_PARTITION="${DISK}1"
-		  export ROOT_PARTITION="${DISK}2"
+		  ROOT_PARTITION="${DISK}2"
 		fi
 		
 		echo "EFI_PARTITION=${EFI_PARTITION}" >> ${HOME}/arch-base/install.conf
@@ -52,8 +52,8 @@ case ${FORMAT} in
 		echo "-------------------------------------------------"
 		echo "Opening LUKS volume                              "
 		echo "-------------------------------------------------"
-		export CRYPTROOT_NAME="cryptroot"
-		export CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
+		CRYPTROOT_NAME="cryptroot"
+		CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
 		cryptsetup open ${ROOT_PARTITION} ${CRYPTROOT_NAME}
 		
 		echo "CRYPTROOT_NAME=${CRYPTROOT_NAME}" >> ${HOME}/arch-base/install.conf
