@@ -137,7 +137,7 @@ echo "-------------------------------------------------"
 echo "Configuring Grub                                 "
 echo "-------------------------------------------------"
 ROOT_PARTITION_UUID=$(blkid -o value -s UUID ${ROOT_PARTITION})
-sed -i "s/quiet/cryptdevice=UUID=${ROOT_PARTITION_UUID}:${CRYPTROOT_NAME} root=${CRYPTROOT_PATH}/" /etc/default/grub
+sed -i "s|quiet|cryptdevice=UUID=${ROOT_PARTITION_UUID}:${CRYPTROOT_NAME} root=${CRYPTROOT_PATH}|" /etc/default/grub
 sed -i 's/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/' /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
