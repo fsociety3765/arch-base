@@ -126,5 +126,4 @@ passwd ${USERNAME}
 usermod -aG wheel ${USERNAME}
 echo "${USERNAME} ALL=(ALL) ALL" >> "/etc/sudoers.d/${USERNAME}"
 echo "USERNAME=${USERNAME}" >> /arch-base/install.conf
-cp -R /arch-base /home/${USERNAME}/
 
