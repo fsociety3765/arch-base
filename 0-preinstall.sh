@@ -3,16 +3,18 @@
 echo "-------------------------------------------------"
 echo "Starting Pre-install                             "
 echo "-------------------------------------------------"
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-iso=$(curl -4 ifconfig.co/country-iso)
+export SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+export ISO=$(curl -4 ifconfig.co/country-iso)
+echo "SCRIPT_DIR=${SCRIPT_DIR}" >> ${HOME}/arch-base/install.conf
+echo "ISO=${ISO}" >> ${HOME}/arch-base/install.conf
 timedatectl set-ntp true
 
 echo -e "-----------------------------------------------"
-echo -e "Setting up $iso mirrors for faster downloads   "
+echo -e "Setting up ${ISO} mirrors for faster downloads   "
 echo -e "-----------------------------------------------"
 sed -i 's/^#Para/Para/' /etc/pacman.conf
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
+reflector -a 48 -c ${ISO} -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 echo "-------------------------------------------------"
 echo "-------select your disk to format----------------"
@@ -20,8 +22,8 @@ echo "-------------------------------------------------"
 lsblk
 read -p "Please enter disk to work on: (example /dev/sda): " DISK
 echo "THIS WILL FORMAT AND DELETE ALL DATA ON THE DISK"
-read -p "Are you sure you want to continue (Y/N):" formatdisk
-case $formatdisk in
+read -p "Are you sure you want to continue (Y/N):" FORMAT
+case ${FORMAT} in
 	y|Y|yes|Yes|YES)
 		echo "-------------------------------------------------"
 		echo -e "\nFormatting disk...\n$HR"
@@ -39,7 +41,8 @@ case $formatdisk in
 		  export ROOT_PARTITION="${DISK}2"
 		fi
 		
-		echo "ROOT_PARTITION=${ROOT_PARTITION}" >> /arch-base/install.conf
+		echo "EFI_PARTITION=${EFI_PARTITION}" >> ${HOME}/arch-base/install.conf
+		echo "ROOT_PARTITION=${ROOT_PARTITION}" >> ${HOME}/arch-base/install.conf
 
 		echo "-------------------------------------------------"
 		echo "Setting up LUKS encryption                       "
@@ -53,8 +56,8 @@ case $formatdisk in
 		export CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
 		cryptsetup open ${ROOT_PARTITION} ${CRYPTROOT_NAME}
 		
-		echo "CRYPTROOT_NAME=${CRYPTROOT_NAME}" >> /arch-base/install.conf
-		echo "CRYPTROOT_PATH=${CRYPTROOT_PATH}" >> /arch-base/install.conf
+		echo "CRYPTROOT_NAME=${CRYPTROOT_NAME}" >> ${HOME}/arch-base/install.conf
+		echo "CRYPTROOT_PATH=${CRYPTROOT_PATH}" >> ${HOME}/arch-base/install.conf
 
 		echo "-------------------------------------------------"
 		echo "Creating filesystem                              "
