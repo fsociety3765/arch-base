@@ -96,6 +96,7 @@ PKGS=(
   'nano'
   'bat'
   'btop'
+  'ranger'
 )
 
 for PKG in "${PKGS[@]}"; do
@@ -125,5 +126,7 @@ useradd -m ${USERNAME}
 passwd ${USERNAME}
 usermod -aG wheel ${USERNAME}
 echo "${USERNAME} ALL=(ALL) ALL" >> "/etc/sudoers.d/${USERNAME}"
+echo "permit persist :wheel" >> /etc/doas.conf
+echo "permit persist :${USERNAME}" >> /etc/doas.conf
 echo "USERNAME=${USERNAME}" >> /arch-base/.env
 
