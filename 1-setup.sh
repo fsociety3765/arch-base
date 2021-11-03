@@ -45,6 +45,7 @@ PKGS=(
   'dosfstools'
   'base-devel'
   'linux-headers'
+  'cronie'
   'avahi'
   'xdg-user-dirs'
   'xdg-utils' 
