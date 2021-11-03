@@ -14,7 +14,7 @@ Once up and running the RAM could be reduced. In testing with 2GB RAM, the insta
 2. Refresh mirrors  
 ```pacman -Syy```
 4. Install Git   
-```pacman -S git```  
+```pacman -S git --noconfirm```  
 5. Clone the git repository  
 ```git clone https://github.com/fsociety3765/arch-base```
 6. Move into the git repo and make all scripts executable  
