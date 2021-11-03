@@ -49,6 +49,12 @@ cp -r /arch-base/ /home/${USERNAME}/
 chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/arch-base/
 
 echo "-------------------------------------------------"
+echo "Cleanup                                          "
+echo "-------------------------------------------------"
+sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+
+echo "-------------------------------------------------"
 echo "Setup Complete                                   "
 echo "-------------------------------------------------"
 
