@@ -29,12 +29,6 @@ sudo timeshift --create --comment "Initial" --tags D --snapshot-device ${ROOT_PA
 sudo timeshift --list --snapshot-device ${ROOT_PARTITION}
 
 echo "-------------------------------------------------"
-echo "Setting up ZRAM                                  "
-echo "-------------------------------------------------"
-sudo sed -i 's/# MAX_SIZE=8192/MAX_SIZE=1024/g' /etc/default/zramd
-sudo systemctl enable --now zramd
-
-echo "-------------------------------------------------"
 echo "Installing Oh-My-ZSH                             "
 echo "-------------------------------------------------"
 cd ~
