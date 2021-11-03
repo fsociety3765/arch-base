@@ -36,6 +36,7 @@ systemctl enable reflector.timer
 systemctl enable fstrim.timer
 systemctl enable firewalld
 systemctl enable acpid
+systemctl enable cronie
 
 echo "-------------------------------------------------"
 echo "Copying arch-base repo to user directory         "
