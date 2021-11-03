@@ -20,3 +20,10 @@ for PKG in "${PKGS[@]}"; do
     paru -S --noconfirm $PKG
 done
 
+echo "-------------------------------------------------"
+echo "Setting up Timeshift snapshots                   "
+echo "-------------------------------------------------"
+source /arch-base/.env
+sudo timeshift --create --comment "Initial" --tags D --snapshot-device ${ROOT_PARTITION} --btrfs
+sudo timeshift --list --snapshot-device ${ROOT_PARTITION}
+
