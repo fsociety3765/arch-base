@@ -25,6 +25,12 @@ echo "-------------------------------------------------"
 echo "${CRYPTROOT_NAME}	UUID=${ROOT_PARTITION_UUID}	/crypto_keyfile.bin	luks" >> /etc/crypttab
 
 echo "-------------------------------------------------"
+echo "Setting up ZRAM                                  "
+echo "-------------------------------------------------"
+sed -i 's/# MAX_SIZE=8192/MAX_SIZE=1024/g' /etc/default/zramd
+
+
+echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
 echo "-------------------------------------------------"
 systemctl enable NetworkManager
@@ -35,6 +41,7 @@ systemctl enable fstrim.timer
 systemctl enable firewalld
 systemctl enable acpid
 systemctl enable cronie
+systemctl enable zramd
 
 echo "-------------------------------------------------"
 echo "Copying arch-base repo to user directory         "
