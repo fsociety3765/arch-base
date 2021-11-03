@@ -29,7 +29,6 @@ echo "Setting up ZRAM                                  "
 echo "-------------------------------------------------"
 sed -i 's/# MAX_SIZE=8192/MAX_SIZE=1024/g' /etc/default/zramd
 
-
 echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
 echo "-------------------------------------------------"
