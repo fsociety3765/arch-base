@@ -5,8 +5,8 @@ echo "Starting Pre-install                             "
 echo "-------------------------------------------------"
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 ISO=$(curl -4 ifconfig.co/country-iso)
-echo "SCRIPT_DIR=${SCRIPT_DIR}" >> ${HOME}/arch-base/install.conf
-echo "ISO=${ISO}" >> ${HOME}/arch-base/install.conf
+echo "SCRIPT_DIR=${SCRIPT_DIR}" >> ${HOME}/arch-base/.env
+echo "ISO=${ISO}" >> ${HOME}/arch-base/.env
 timedatectl set-ntp true
 
 echo -e "-----------------------------------------------"
@@ -41,8 +41,8 @@ case ${FORMAT} in
 		  ROOT_PARTITION="${DISK}2"
 		fi
 		
-		echo "EFI_PARTITION=${EFI_PARTITION}" >> ${HOME}/arch-base/install.conf
-		echo "ROOT_PARTITION=${ROOT_PARTITION}" >> ${HOME}/arch-base/install.conf
+		echo "EFI_PARTITION=${EFI_PARTITION}" >> ${HOME}/arch-base/.env
+		echo "ROOT_PARTITION=${ROOT_PARTITION}" >> ${HOME}/arch-base/.env
 
 		echo "-------------------------------------------------"
 		echo "Setting up LUKS encryption                       "
@@ -56,8 +56,8 @@ case ${FORMAT} in
 		CRYPTROOT_PATH="/dev/mapper/${CRYPTROOT_NAME}"
 		cryptsetup open ${ROOT_PARTITION} ${CRYPTROOT_NAME}
 		
-		echo "CRYPTROOT_NAME=${CRYPTROOT_NAME}" >> ${HOME}/arch-base/install.conf
-		echo "CRYPTROOT_PATH=${CRYPTROOT_PATH}" >> ${HOME}/arch-base/install.conf
+		echo "CRYPTROOT_NAME=${CRYPTROOT_NAME}" >> ${HOME}/arch-base/.env
+		echo "CRYPTROOT_PATH=${CRYPTROOT_PATH}" >> ${HOME}/arch-base/.env
 
 		echo "-------------------------------------------------"
 		echo "Creating filesystem                              "
