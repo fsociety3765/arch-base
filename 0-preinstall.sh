@@ -110,6 +110,18 @@ echo "-------------------------------------------------"
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "-------------------------------------------------"
+echo "Setting up swapfile                              "
+echo "-------------------------------------------------"
+truncate -s 0 /mnt/swap/swapfile
+chattr +C /mnt/swap/swapfile
+btrfs property set /mnt/swap/swapfile compression none
+dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=2048 status=progress
+chmod 600 /mnt/swap/swapfile
+mkswap /mnt/swap/swapfile
+swapon /mnt/swap/swapfile
+echo "/swap/swapfile none swap defaults 0 0" >> /mnt/etc/fstab
+
+echo "-------------------------------------------------"
 echo "Setting up LUKS keyfile                          "
 echo "-------------------------------------------------"
 dd bs=512 count=4 if=/dev/random of=/mnt/crypto_keyfile.bin iflag=fullblock
