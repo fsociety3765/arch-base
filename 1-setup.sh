@@ -132,3 +132,9 @@ echo "permit persist :wheel" >> /etc/doas.conf
 echo "permit persist :${USERNAME}" >> /etc/doas.conf
 echo "USERNAME=${USERNAME}" >> /arch-base/.env
 
+echo "-------------------------------------------------"
+echo "Copying arch-base repo to user directory         "
+echo "-------------------------------------------------"
+cp -r /arch-base/ /home/${USERNAME}/
+chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/arch-base/
+
