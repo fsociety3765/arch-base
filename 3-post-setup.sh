@@ -38,6 +38,12 @@ systemctl enable firewalld
 systemctl enable acpid
 
 echo "-------------------------------------------------"
+echo "Copying arch-base repo to user directory         "
+echo "-------------------------------------------------"
+cp -r /arch-base/ /home/${USERNAME}/
+chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/arch-base/
+
+echo "-------------------------------------------------"
 echo "Setup Complete                                   "
 echo "-------------------------------------------------"
 
