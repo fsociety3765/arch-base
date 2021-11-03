@@ -97,6 +97,8 @@ PKGS=(
   'bat'
   'btop'
   'ranger'
+  'neofetch'
+  'ncdu'
 )
 
 for PKG in "${PKGS[@]}"; do
