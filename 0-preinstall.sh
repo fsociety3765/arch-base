@@ -70,6 +70,7 @@ case ${FORMAT} in
 		btrfs subvolume create /mnt/@snapshots
 		btrfs subvolume create /mnt/@log
 		btrfs subvolume create /mnt/@cache
+		btrfs subvolume create /mnt/@swap
 		umount /mnt
 esac
 
