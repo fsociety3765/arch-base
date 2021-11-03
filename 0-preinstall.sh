@@ -82,9 +82,11 @@ mkdir -p /mnt/boot/efi
 mkdir -p /mnt/home
 mkdir -p /mnt/var/log
 mkdir -p /mnt/var/cache
+mkdir -p /mnt/swap
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@home ${CRYPTROOT_PATH} /mnt/home
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@log ${CRYPTROOT_PATH} /mnt/var/log
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@cache ${CRYPTROOT_PATH} /mnt/var/cache
+mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@swap ${CRYPTROOT_PATH} /mnt/swap
 mount ${EFI_PARTITION} /mnt/boot/efi
 
 if ! grep -qs '/mnt' /proc/mounts; then
