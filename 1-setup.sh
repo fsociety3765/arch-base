@@ -101,6 +101,7 @@ PKGS=(
   'open-vm-tools'
   'snapper'
   'snap-pac'
+  'ufw'
 )
 
 for PKG in "${PKGS[@]}"; do
