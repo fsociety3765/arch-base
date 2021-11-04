@@ -1,7 +1,7 @@
 # Arch-Base
 A collection of bash scripts to get Arch Linux up and running with ease.
 
-This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS root partition encrypted with LUKS. There is no swap partition. Swap is provided using the combination of a 2GB swapfile and 1GB of ZRAM. 
+This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS root partition encrypted with LUKS. There is no swap partition. Swap is provided using the combination of a 2GB swapfile and 1GB of ZRAM. The ZRAM will be the priority swap space before anything is written to the swapfile on disk. 
 
 ## Minimum Recommended Hardware  
 - 2 CPU Cores
