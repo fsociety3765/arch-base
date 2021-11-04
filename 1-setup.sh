@@ -101,6 +101,8 @@ PKGS=(
   'snapper'
   'snap-pac'
   'ufw'
+  'nmap'
+  'speedtest-cli'
 )
 
 for PKG in "${PKGS[@]}"; do
