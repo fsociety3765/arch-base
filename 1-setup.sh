@@ -99,6 +99,8 @@ PKGS=(
   'neofetch'
   'ncdu'
   'open-vm-tools'
+  'snapper'
+  'snap-pac'
 )
 
 for PKG in "${PKGS[@]}"; do
