@@ -126,11 +126,10 @@ echo "-------------------------------------------------"
 echo "Setup MAKEPKG config                             "
 echo "-------------------------------------------------"
 CPU_CORES=$(grep -c ^processor /proc/cpuinfo)
-echo "You have " ${CPU_CORES}" cores."
+echo "You have ${CPU_CORES} cores."
 echo "-------------------------------------------------"
 echo "Changing the makeflags for "${CPU_CORES}" cores."
-TOTALMEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
-if [[  $TOTALMEM -gt 8000000 ]]; then
+if [[  ${CPU_CORES} -gt 2 ]]; then
 	sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j${CPU_CORES}\"/g" /etc/makepkg.conf
 	echo "Changing the compression settings for "${CPU_CORES}" cores."
 	sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T ${CPU_CORES} -z -)/g" /etc/makepkg.conf
