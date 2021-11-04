@@ -53,6 +53,7 @@ echo "Cleanup                                          "
 echo "-------------------------------------------------"
 sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+echo "${USERNAME} ALL=(ALL) ALL" > "/etc/sudoers.d/${USERNAME}"
 
 echo "-------------------------------------------------"
 echo "Setup Complete                                   "
