@@ -5,8 +5,8 @@ This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS
 
 ## Minimum Recommended Hardware  
 - 2 CPU Cores
-- 2GB RAM  
-- 10GB HDD
+- 2GB RAM. 1GB will be reserved for ZRAM swap.  
+- 10GB HDD. 2GB will be reserved for swap.  
 
 ## Steps
 1. Boot to live ISO
