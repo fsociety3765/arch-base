@@ -28,6 +28,13 @@ echo "-------------------------------------------------"
 passwd root
 
 echo "-------------------------------------------------"
+echo "Setup root user bash                             "
+echo "-------------------------------------------------"
+echo "[[ -f ~/.bashrc ]] && . ~/.bashrc" >> ${HOME}/.bash_profile
+cp ${HOME}/arch-base/.bashrc ${HOME}/
+source ${HOME}/.bashrc
+
+echo "-------------------------------------------------"
 echo "Installing system packages                       "
 echo "-------------------------------------------------"
 sed -i 's/^#Para/Para/' /etc/pacman.conf
