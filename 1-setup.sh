@@ -31,7 +31,7 @@ echo "-------------------------------------------------"
 echo "Setup root user bash                             "
 echo "-------------------------------------------------"
 echo "[[ -f ~/.bashrc ]] && . ~/.bashrc" >> ${HOME}/.bash_profile
-cp ${HOME}/arch-base/.bashrc ${HOME}/
+cp /arch-base/.bashrc ${HOME}/
 source ${HOME}/.bashrc
 
 echo "-------------------------------------------------"
