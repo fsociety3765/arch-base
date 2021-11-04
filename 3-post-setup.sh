@@ -56,6 +56,11 @@ echo "-------------------------------------------------"
 echo "${USERNAME} ALL=(ALL) ALL" > "/etc/sudoers.d/${USERNAME}"
 
 echo "-------------------------------------------------"
+echo "Setting user (${USERNAME}) default shell to ZSH  "
+echo "-------------------------------------------------"
+usermod --shell /bin/zsh ${USERNAME}
+
+echo "-------------------------------------------------"
 echo "Setup Complete                                   "
 echo "-------------------------------------------------"
 
