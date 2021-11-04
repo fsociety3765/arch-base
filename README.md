@@ -1,13 +1,12 @@
 # Arch-Base
 A collection of bash scripts to get Arch Linux up and running with ease.
 
-This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS root partition encrypted with LUKS. There is no swap partition. Swap is provided using a combination of a 2GB swapfile and 1GB ZRAM. 
+This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS root partition encrypted with LUKS. There is no swap partition. Swap is provided using the combination of a 2GB swapfile and 1GB of ZRAM. 
 
 ## Minimum Recommended Hardware  
 - 2 CPU Cores
 - 4GB RAM  
-  
-Once up and running the RAM could be reduced. In testing with 2GB RAM, the install would crash during the AUR builds. So I would recommend at least 4GB RAM to run the installation. 
+- 10GB HDD
 
 ## Steps
 1. Boot to live ISO
