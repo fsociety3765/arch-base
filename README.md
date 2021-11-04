@@ -5,7 +5,7 @@ This is a slightly opinionated setup that uses an EFI boot partition and a BTRFS
 
 ## Minimum Recommended Hardware  
 - 2 CPU Cores
-- 4GB RAM  
+- 2GB RAM  
 - 10GB HDD
 
 ## Steps
