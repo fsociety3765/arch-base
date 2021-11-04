@@ -61,7 +61,6 @@ PKGS=(
   'nfs-utils'
   'inetutils'
   'dnsutils'
-  'alsa-utils'
   'bash-completion'
   'openssh'
   'rsync'
