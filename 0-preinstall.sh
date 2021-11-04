@@ -79,7 +79,7 @@ echo "Setting up mount points                          "
 echo "-------------------------------------------------"
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@ ${CRYPTROOT_PATH} /mnt
 mkdir -p /mnt/boot/efi
-mkdir -p /mnt/{home,swap,.snapsnots}
+mkdir -p /mnt/{home,swap,.snapshots}
 mkdir -p /mnt/var/{log,cache}
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@home ${CRYPTROOT_PATH} /mnt/home
 mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@log ${CRYPTROOT_PATH} /mnt/var/log
