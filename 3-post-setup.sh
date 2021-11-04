@@ -51,10 +51,8 @@ cp -r /arch-base/ /home/${USERNAME}/
 chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/arch-base/
 
 echo "-------------------------------------------------"
-echo "Cleanup                                          "
+echo "Resetting user (${USERNAME}) sudo permissions    "
 echo "-------------------------------------------------"
-sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
-sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 echo "${USERNAME} ALL=(ALL) ALL" > "/etc/sudoers.d/${USERNAME}"
 
 echo "-------------------------------------------------"
