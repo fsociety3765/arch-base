@@ -41,6 +41,8 @@ systemctl enable firewalld
 systemctl enable acpid
 systemctl enable cronie
 systemctl enable zramd
+systemctl enable snapper-timeline.timer
+systemctl enable snapper-cleanup.timer
 
 echo "-------------------------------------------------"
 echo "Copying arch-base repo to user directory         "
