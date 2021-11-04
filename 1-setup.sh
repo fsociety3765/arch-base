@@ -103,6 +103,7 @@ PKGS=(
   'ufw'
   'nmap'
   'speedtest-cli'
+  'mlocate'
 )
 
 for PKG in "${PKGS[@]}"; do
