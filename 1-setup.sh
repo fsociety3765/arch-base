@@ -142,6 +142,7 @@ read -p "Username: " USERNAME
 useradd -m ${USERNAME}
 passwd ${USERNAME}
 usermod -aG wheel ${USERNAME}
+sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" >> "/etc/sudoers.d/${USERNAME}"
 echo "permit persist :wheel" >> /etc/doas.conf
 echo "permit persist :${USERNAME}" >> /etc/doas.conf
