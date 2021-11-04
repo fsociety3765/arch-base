@@ -110,16 +110,16 @@ for PKG in "${PKGS[@]}"; do
 done
 
 CPU_TYPE=$(lscpu | awk '/Vendor ID:/ {print $3}')
-case "${CPU_TYPE}" in
+case ${CPU_TYPE} in
 	GenuineIntel)
-		print "Installing Intel microcode"
+		echo "Installing Intel microcode"
 		pacman -S --noconfirm intel-ucode
-		proc_ucode=intel-ucode.img
+		CPU_UCODE=intel-ucode.img
 		;;
 	AuthenticAMD)
-		print "Installing AMD microcode"
+		echo "Installing AMD microcode"
 		pacman -S --noconfirm amd-ucode
-		proc_ucode=amd-ucode.img
+		CPU_UCODE=amd-ucode.img
 		;;
 esac	
 
