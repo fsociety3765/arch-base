@@ -153,7 +153,7 @@ echo "Setup Snapper snapshots                          "
 echo "-------------------------------------------------"
 umount /.snapshots
 rm -r /.snapshots
-snapper -c root create-config /
+snapper --no-dbus -c root create-config /
 btrfs subvolume delete /.snapshots
 mkdir /.snapshots
 mount -a
@@ -163,8 +163,6 @@ sed -i "s/TIMELINE_LIMIT_YEARLY=\"10\"/TIMELINE_LIMIT_YEARLY=\"0\"/g" /etc/snapp
 sed -i "s/TIMELINE_LIMIT_MONTHLY=\"10\"/TIMELINE_LIMIT_MONTHLY=\"0\"/g" /etc/snapper/configs/root
 sed -i "s/TIMELINE_LIMIT_DAILY=\"10\"/TIMELINE_LIMIT_DAILY=\"7\"/g" /etc/snapper/configs/root
 sed -i "s/TIMELINE_LIMIT_HOURLY=\"10\"/TIMELINE_LIMIT_HOURLY=\"5\"/g" /etc/snapper/configs/root
-systemctl enable --now snapper-timeline.timer
-systemctl enable --now snapper-cleanup.timer
 
 echo "-------------------------------------------------"
 echo "Copying arch-base repo to user directory         "
