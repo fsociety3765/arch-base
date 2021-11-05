@@ -109,6 +109,7 @@ PKGS=(
   'openvpn'
   'minio-client'
   'github-cli'
+  'apparmor'
 )
 
 for PKG in "${PKGS[@]}"; do
