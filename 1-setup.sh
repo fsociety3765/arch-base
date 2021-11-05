@@ -108,6 +108,7 @@ PKGS=(
   'wireguard-tools'
   'openvpn'
   'minio-client'
+  'github-cli'
 )
 
 for PKG in "${PKGS[@]}"; do
