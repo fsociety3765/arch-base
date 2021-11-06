@@ -113,8 +113,6 @@ PKGS=(
   'wine'
   'winetricks'
   'openssl'
-  'python-notify2'
-  'python-psutil'
   'audit'
 )
 
