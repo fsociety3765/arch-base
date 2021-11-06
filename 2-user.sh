@@ -14,6 +14,9 @@ echo "This may take some time... Please be patient     "
 echo "-------------------------------------------------"
 PKGS=(
   'zramd'
+  'vim-plug'
+  'neovim-plug'
+  'powershell-bin'
 )
 
 for PKG in "${PKGS[@]}"; do

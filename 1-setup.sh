@@ -104,6 +104,16 @@ PKGS=(
   'nmap'
   'speedtest-cli'
   'mlocate'
+  'tailscale'
+  'wireguard-tools'
+  'openvpn'
+  'minio-client'
+  'github-cli'
+  'apparmor'
+  'wine'
+  'winetricks'
+  'openssl'
+  'audit'
 )
 
 for PKG in "${PKGS[@]}"; do
