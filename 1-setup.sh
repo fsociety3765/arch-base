@@ -110,6 +110,9 @@ PKGS=(
   'minio-client'
   'github-cli'
   'apparmor'
+  'wine'
+  'winetricks'
+  'openssl'
 )
 
 for PKG in "${PKGS[@]}"; do
