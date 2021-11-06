@@ -113,6 +113,9 @@ PKGS=(
   'wine'
   'winetricks'
   'openssl'
+  'python-notify2'
+  'python-psutil'
+  'audit'
 )
 
 for PKG in "${PKGS[@]}"; do
