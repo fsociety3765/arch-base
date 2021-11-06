@@ -30,6 +30,11 @@ echo "-------------------------------------------------"
 sed -i 's/# MAX_SIZE=8192/MAX_SIZE=1024/g' /etc/default/zramd
 
 echo "-------------------------------------------------"
+echo "Enabling apparmor write cache                    "
+echo "-------------------------------------------------"
+sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
+
+echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
 echo "-------------------------------------------------"
 systemctl enable NetworkManager
