@@ -114,6 +114,7 @@ PKGS=(
   'winetricks'
   'openssl'
   'audit'
+  'tree'
 )
 
 for PKG in "${PKGS[@]}"; do
