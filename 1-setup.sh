@@ -115,6 +115,9 @@ PKGS=(
   'openssl'
   'audit'
   'tree'
+  'cowsay'
+  'lolcat'
+  'figlet'
 )
 
 for PKG in "${PKGS[@]}"; do
