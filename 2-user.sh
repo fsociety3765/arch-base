@@ -17,6 +17,7 @@ PKGS=(
   'vim-plug'
   'neovim-plug'
   'powershell-bin'
+  'update-grub'
 )
 
 for PKG in "${PKGS[@]}"; do
