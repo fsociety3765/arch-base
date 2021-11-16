@@ -114,6 +114,7 @@ PKGS=(
   'lolcat'
   'figlet'
   'ansible'
+  'trash-cli'
 )
 
 for PKG in "${PKGS[@]}"; do
