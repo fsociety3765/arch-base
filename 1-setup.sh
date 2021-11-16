@@ -118,6 +118,7 @@ PKGS=(
   'cowsay'
   'lolcat'
   'figlet'
+  'ansible'
 )
 
 for PKG in "${PKGS[@]}"; do
