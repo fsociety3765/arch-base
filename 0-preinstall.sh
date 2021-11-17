@@ -113,7 +113,7 @@ echo "-------------------------------------------------"
 echo "Setting up swapfile                              "
 echo "-------------------------------------------------"
 TOTAL_MEM=$(awk '/MemTotal/ {printf( "%d\n", $2 / 1024 )}' /proc/meminfo)
-SWAPFILE_SIZE=$((${TOTAL_MEM}+1024))
+SWAPFILE_SIZE=$((${TOTAL_MEM}+2048))
 truncate -s 0 /mnt/swap/swapfile
 chattr +C /mnt/swap/swapfile
 btrfs property set /mnt/swap/swapfile compression none
