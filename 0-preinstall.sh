@@ -112,13 +112,12 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "-------------------------------------------------"
 echo "Setting up swapfile                              "
 echo "-------------------------------------------------"
-#TOTAL_MEM=$(awk '/MemTotal/ {printf( "%d\n", $2 / 1024 )}' /proc/meminfo)
-#SWAP_SIZE=${TOTAL_MEM} + 1024
-SWAP_SIZE=2048
+TOTAL_MEM=$(awk '/MemTotal/ {printf( "%d\n", $2 / 1024 )}' /proc/meminfo)
+SWAPFILE_SIZE=$((${TOTAL_MEM}+1024))
 truncate -s 0 /mnt/swap/swapfile
 chattr +C /mnt/swap/swapfile
 btrfs property set /mnt/swap/swapfile compression none
-dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=${SWAP_SIZE} status=progress
+dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=${SWAPFILE_SIZE} status=progress
 chmod 600 /mnt/swap/swapfile
 mkswap /mnt/swap/swapfile
 swapon /mnt/swap/swapfile
