@@ -115,6 +115,7 @@ PKGS=(
   'figlet'
   'ansible'
   'trash-cli'
+  'python-pip'
 )
 
 for PKG in "${PKGS[@]}"; do
