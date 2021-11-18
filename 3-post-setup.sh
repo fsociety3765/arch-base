@@ -52,6 +52,7 @@ systemctl enable cronie
 systemctl enable zramd
 systemctl enable snapper-timeline.timer
 systemctl enable snapper-cleanup.timer
+systemctl enable snapper-boot.timer
 systemctl enable grub-btrfs.path
 systemctl enable apparmor
 systemctl enable auditd
