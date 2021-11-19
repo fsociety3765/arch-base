@@ -32,6 +32,7 @@ echo "Setup root user bash                             "
 echo "-------------------------------------------------"
 echo "[[ -f ~/.bashrc ]] && . ~/.bashrc" >> ${HOME}/.bash_profile
 cp /arch-base/.bashrc ${HOME}/
+touch ${HOME}/.bash_history
 source ${HOME}/.bashrc
 
 echo "-------------------------------------------------"
