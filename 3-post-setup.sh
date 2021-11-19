@@ -39,6 +39,14 @@ echo "-------------------------------------------------"
 sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
 
 echo "-------------------------------------------------"
+echo "Setting up Arch Linux Netboot                    "
+echo "-------------------------------------------------"
+wget https://archlinux.org/static/netboot/ipxe-arch.16e24bec1a7c.efi
+mkdir /boot/efi/EFI/arch_netboot
+mv ipxe*.*.efi /boot/efi/EFI/arch_netboot/arch_netboot.efi
+efibootmgr --create --disk ${EFI_PARTITION} --part 1 --loader /EFI/arch_netboot/arch_netboot.efi --label "Arch Linux Netboot" --verbose
+
+echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
 echo "-------------------------------------------------"
 systemctl enable NetworkManager
