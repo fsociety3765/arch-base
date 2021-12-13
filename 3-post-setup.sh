@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /arch-base/.env
+
 echo "-------------------------------------------------"
 echo "Configuring initramfs                            "
 echo "-------------------------------------------------"
@@ -9,9 +11,16 @@ sed -i 's/block filesystems keyboard fsck/block encrypt filesystems keyboard/' /
 mkinitcpio -p linux
 
 echo "-------------------------------------------------"
+echo "Setting up Arch Linux Netboot                    "
+echo "-------------------------------------------------"
+wget https://archlinux.org/static/netboot/ipxe-arch.16e24bec1a7c.efi
+mkdir /boot/efi/EFI/arch_netboot
+mv ipxe*.*.efi /boot/efi/EFI/arch_netboot/arch_netboot.efi
+efibootmgr --create --disk ${EFI_PARTITION} --part 1 --loader /EFI/arch_netboot/arch_netboot.efi --label "Arch Linux Netboot" --verbose
+
+echo "-------------------------------------------------"
 echo "Configuring Grub                                 "
 echo "-------------------------------------------------"
-source /arch-base/.env
 ROOT_PARTITION_UUID=$(blkid -o value -s UUID ${ROOT_PARTITION})
 echo "ROOT_PARTITION_UUID=${ROOT_PARTITION_UUID}" >> /arch-base/.env
 sed -i "s|quiet|cryptdevice=UUID=${ROOT_PARTITION_UUID}:${CRYPTROOT_NAME} root=${CRYPTROOT_PATH} lsm=landlock,lockdown,yama,apparmor,bpf audit=1|g" /etc/default/grub
@@ -39,14 +48,6 @@ echo "-------------------------------------------------"
 sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
 
 echo "-------------------------------------------------"
-echo "Setting up Arch Linux Netboot                    "
-echo "-------------------------------------------------"
-wget https://archlinux.org/static/netboot/ipxe-arch.16e24bec1a7c.efi
-mkdir /boot/efi/EFI/arch_netboot
-mv ipxe*.*.efi /boot/efi/EFI/arch_netboot/arch_netboot.efi
-efibootmgr --create --disk ${EFI_PARTITION} --part 1 --loader /EFI/arch_netboot/arch_netboot.efi --label "Arch Linux Netboot" --verbose
-
-echo "-------------------------------------------------"
 echo "Enabling services to start at boot               "
 echo "-------------------------------------------------"
 systemctl enable NetworkManager
@@ -56,7 +57,7 @@ systemctl enable reflector.timer
 systemctl enable fstrim.timer
 systemctl enable firewalld
 systemctl enable acpid
-systemctl enable cronie
+#systemctl enable cronie
 systemctl enable zramd
 systemctl enable snapper-timeline.timer
 systemctl enable snapper-cleanup.timer
@@ -76,12 +77,11 @@ echo "Resetting user (${USERNAME}) sudo permissions    "
 echo "-------------------------------------------------"
 echo "${USERNAME} ALL=(ALL) ALL" > "/etc/sudoers.d/${USERNAME}"
 
-echo "-------------------------------------------------"
-echo "Setting user (${USERNAME}) default shell to ZSH  "
-echo "-------------------------------------------------"
-usermod --shell /bin/zsh ${USERNAME}
+#echo "-------------------------------------------------"
+#echo "Setting user (${USERNAME}) default shell to ZSH  "
+#echo "-------------------------------------------------"
+#usermod --shell /bin/zsh ${USERNAME}
 
 echo "-------------------------------------------------"
 echo "Setup Complete                                   "
 echo "-------------------------------------------------"
-
