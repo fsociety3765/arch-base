@@ -14,19 +14,19 @@ echo "This may take some time... Please be patient     "
 echo "-------------------------------------------------"
 PKGS=(
   'zramd'
-  'vim-plug'
-  'neovim-plug'
-  'powershell-bin'
-  'update-grub'
+#  'vim-plug'
+#  'neovim-plug'
+#  'powershell-bin'
+#  'update-grub'
 )
 
 for PKG in "${PKGS[@]}"; do
     paru -S --noconfirm $PKG
 done
 
-echo "-------------------------------------------------"
-echo "Installing Oh-My-ZSH                             "
-echo "-------------------------------------------------"
-cd ~
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+#echo "-------------------------------------------------"
+#echo "Installing Oh-My-ZSH                             "
+#echo "-------------------------------------------------"
+#cd ~
+#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
